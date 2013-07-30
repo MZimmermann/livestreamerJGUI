@@ -43,31 +43,37 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jScrollPane1" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="bFile" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="spFile" max="32767" attributes="0"/>
-                          <Group type="102" attributes="0">
-                              <Component id="labelFile" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          </Group>
-                      </Group>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
                       <Component id="rbWatch" min="-2" max="-2" attributes="0"/>
                       <EmptySpace pref="344" max="32767" attributes="0"/>
                       <Component id="bGo" min="-2" pref="55" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="labelOutput" min="-2" max="-2" attributes="0"/>
-                  <Component id="rbRecord" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="labelStreamUrl" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="tfStreamUrl" min="-2" pref="311" max="-2" attributes="0"/>
-                  </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       <Component id="bStop" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="bFile" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="labelFile" min="-2" max="-2" attributes="0"/>
+                                  <Component id="tfFile" min="-2" pref="320" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Component id="labelOutput" min="-2" max="-2" attributes="0"/>
+                          <Component id="rbRecord" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="labelStreamUrl" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="tfStreamUrl" min="-2" pref="311" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="labelQuality" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="tfQuality" min="-2" pref="80" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -84,10 +90,12 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="bStop" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="11" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="labelStreamUrl" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="tfStreamUrl" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="tfQuality" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="labelQuality" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
@@ -96,9 +104,9 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="labelFile" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="bFile" max="32767" attributes="0"/>
-                  <Component id="spFile" min="-2" pref="23" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="bFile" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="tfFile" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
               <Component id="jSeparator2" min="-2" pref="10" max="-2" attributes="0"/>
@@ -121,27 +129,6 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bFileActionPerformed"/>
       </Events>
     </Component>
-    <Container class="javax.swing.JScrollPane" name="spFile">
-      <Properties>
-        <Property name="horizontalScrollBarPolicy" type="int" value="31"/>
-        <Property name="verticalScrollBarPolicy" type="int" value="21"/>
-      </Properties>
-      <AuxValues>
-        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-      </AuxValues>
-
-      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-      <SubComponents>
-        <Component class="javax.swing.JTextArea" name="taFile">
-          <Properties>
-            <Property name="editable" type="boolean" value="false"/>
-            <Property name="columns" type="int" value="20"/>
-            <Property name="rows" type="int" value="5"/>
-            <Property name="enabled" type="boolean" value="false"/>
-          </Properties>
-        </Component>
-      </SubComponents>
-    </Container>
     <Component class="javax.swing.JLabel" name="labelFile">
       <Properties>
         <Property name="text" type="java.lang.String" value="File name:"/>
@@ -199,7 +186,9 @@
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
             <Property name="columns" type="int" value="20"/>
+            <Property name="lineWrap" type="boolean" value="true"/>
             <Property name="rows" type="int" value="5"/>
+            <Property name="wrapStyleWord" type="boolean" value="true"/>
           </Properties>
         </Component>
       </SubComponents>
@@ -228,6 +217,21 @@
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="tfStreamUrl">
+    </Component>
+    <Component class="javax.swing.JTextField" name="tfQuality">
+      <Properties>
+        <Property name="toolTipText" type="java.lang.String" value="Leave empty and ceck output if you are unsure about available bitrates."/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelQuality">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Quality:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="tfFile">
+      <Properties>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

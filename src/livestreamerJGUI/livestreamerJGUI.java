@@ -19,8 +19,6 @@ public class livestreamerJGUI extends javax.swing.JFrame {
         fd = new javax.swing.JFileChooser();
         selectGroup = new javax.swing.ButtonGroup();
         bFile = new javax.swing.JButton();
-        spFile = new javax.swing.JScrollPane();
-        taFile = new javax.swing.JTextArea();
         labelFile = new javax.swing.JLabel();
         rbRecord = new javax.swing.JRadioButton();
         rbWatch = new javax.swing.JRadioButton();
@@ -33,6 +31,9 @@ public class livestreamerJGUI extends javax.swing.JFrame {
         labelStreamUrl = new javax.swing.JLabel();
         bStop = new javax.swing.JButton();
         tfStreamUrl = new javax.swing.JTextField();
+        tfQuality = new javax.swing.JTextField();
+        labelQuality = new javax.swing.JLabel();
+        tfFile = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("livestreamerJGUI");
@@ -46,15 +47,6 @@ public class livestreamerJGUI extends javax.swing.JFrame {
                 bFileActionPerformed(evt);
             }
         });
-
-        spFile.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        spFile.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-
-        taFile.setEditable(false);
-        taFile.setColumns(20);
-        taFile.setRows(5);
-        taFile.setEnabled(false);
-        spFile.setViewportView(taFile);
 
         labelFile.setText("File name:");
         labelFile.setEnabled(false);
@@ -88,7 +80,9 @@ public class livestreamerJGUI extends javax.swing.JFrame {
 
         taOutput.setEditable(false);
         taOutput.setColumns(20);
+        taOutput.setLineWrap(true);
         taOutput.setRows(5);
+        taOutput.setWrapStyleWord(true);
         jScrollPane1.setViewportView(taOutput);
 
         labelOutput.setText("Output:");
@@ -103,6 +97,12 @@ public class livestreamerJGUI extends javax.swing.JFrame {
             }
         });
 
+        tfQuality.setToolTipText("Leave empty and ceck output if you are unsure about available bitrates.");
+
+        labelQuality.setText("Quality:");
+
+        tfFile.setEnabled(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -114,26 +114,31 @@ public class livestreamerJGUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(bFile)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(spFile)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(labelFile)
-                                .addGap(0, 0, Short.MAX_VALUE))))
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(rbWatch)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 344, Short.MAX_VALUE)
                         .addComponent(bGo, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(labelOutput)
-                    .addComponent(rbRecord)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(labelStreamUrl)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfStreamUrl, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(bStop)))
+                        .addComponent(bStop))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(bFile)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(labelFile)
+                                    .addComponent(tfFile, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(labelOutput)
+                            .addComponent(rbRecord)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(labelStreamUrl)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tfStreamUrl, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(labelQuality)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tfQuality, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -145,10 +150,12 @@ public class livestreamerJGUI extends javax.swing.JFrame {
                     .addComponent(bGo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bStop)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelStreamUrl)
-                    .addComponent(tfStreamUrl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfStreamUrl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfQuality, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelQuality))
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -156,9 +163,9 @@ public class livestreamerJGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labelFile)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(bFile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(spFile, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bFile)
+                    .addComponent(tfFile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -171,7 +178,40 @@ public class livestreamerJGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
+    private void toggleRec(){
+        if (rbWatch.isEnabled()){
+            rbWatch.setEnabled(false);
+            rbRecord.setEnabled(false);
+            tfStreamUrl.setEnabled(false);
+            tfQuality.setEnabled(false);
+            bFile.setEnabled(false);
+            tfFile.setEnabled(false);
+        }
+        else{
+            rbWatch.setEnabled(true);
+            rbRecord.setEnabled(true);
+            tfStreamUrl.setEnabled(true);
+            tfQuality.setEnabled(true);
+            bFile.setEnabled(true);
+            tfFile.setEnabled(true);
+        } 
+    }
+    private void toggleWatch(){
+        if (rbRecord.isEnabled()){
+            rbWatch.setEnabled(false);
+            rbRecord.setEnabled(false);
+            tfStreamUrl.setEnabled(false);
+            tfQuality.setEnabled(false);
+            bFile.setEnabled(false);
+            tfFile.setEnabled(false);
+        }
+        else{
+            rbWatch.setEnabled(true);
+            rbRecord.setEnabled(true);
+            tfStreamUrl.setEnabled(true);
+            tfQuality.setEnabled(true);
+        } 
+    }
     
     private String addFileExtIfNecessary(String file,String ext) {
         if(file.lastIndexOf('.') == -1) {
@@ -194,22 +234,23 @@ public class livestreamerJGUI extends javax.swing.JFrame {
         
         if (returnVal == javax.swing.JFileChooser.APPROVE_OPTION) {
             String file_name = fd.getSelectedFile().getPath() + addFileExtIfNecessary(fd.getSelectedFile().getName(),fileExt);
-            taFile.setText("\"" +file_name +"\"");
-            fileName = taFile.getText();
+            tfFile.setText("\"" +file_name +"\"");
+            fileName = tfFile.getText();
         }
     }//GEN-LAST:event_bFileActionPerformed
 
     private void rbRecordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbRecordActionPerformed
         bFile.setEnabled(true);
-        taFile.setEnabled(true);
+        tfFile.setEnabled(true);
+        tfFile.setEnabled(true);
         labelFile.setEnabled(true);
     }//GEN-LAST:event_rbRecordActionPerformed
 
     private void rbWatchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbWatchActionPerformed
         fileName = "no";
-        taFile.setText("");
+        tfFile.setText("");
         bFile.setEnabled(false);
-        taFile.setEnabled(false);
+        tfFile.setEnabled(false);
         labelFile.setEnabled(false);
     }//GEN-LAST:event_rbWatchActionPerformed
     
@@ -220,14 +261,42 @@ livestreamerExe le = new livestreamerExe();
         bGo.setEnabled(false);
         taOutput.setText("");
         if (rbWatch.isSelected()) {
-            String[] cl = { "livestreamer", tfStreamUrl.getText(),"best"};
+            String[] cl = { "livestreamer", tfStreamUrl.getText(), tfQuality.getText()};
             le.runLivestreamer(cl, taOutput);
             bStop.setEnabled(true);
+            toggleWatch();
+            new Thread() {
+                public void run() {
+                    try{
+                        le.getProc().waitFor();
+                    }
+                    catch (Exception err){
+                    }
+                    bGo.setEnabled(true);
+                    bStop.setEnabled(false);
+                    toggleWatch();
+                }
+            }.start();
+            le.nullProc();
         }
         if (rbRecord.isSelected() && !"no".equals(fileName)) {
-            String[] cl = { "livestreamer", tfStreamUrl.getText(),"best","-o",taFile.getText()};
+            String[] cl = { "livestreamer", tfStreamUrl.getText(), tfQuality.getText(), "-o", tfFile.getText()};
             le.runLivestreamer(cl, taOutput);
             bStop.setEnabled(true);
+            toggleRec();
+            new Thread() {
+                public void run() {
+                    try{
+                        le.getProc().waitFor();
+                    }
+                    catch (Exception err){
+                    }
+                    bGo.setEnabled(true);
+                    bStop.setEnabled(false);
+                    toggleRec();
+                }
+            }.start();
+            le.nullProc();
         }
         if (rbRecord.isSelected() && "no".equals(fileName)) {
             JOptionPane.showMessageDialog(this,"Please enter a file name");
@@ -265,13 +334,14 @@ livestreamerExe le = new livestreamerExe();
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel labelFile;
     private javax.swing.JLabel labelOutput;
+    private javax.swing.JLabel labelQuality;
     private javax.swing.JLabel labelStreamUrl;
     private javax.swing.JRadioButton rbRecord;
     private javax.swing.JRadioButton rbWatch;
     private javax.swing.ButtonGroup selectGroup;
-    private javax.swing.JScrollPane spFile;
-    private javax.swing.JTextArea taFile;
     private javax.swing.JTextArea taOutput;
+    private javax.swing.JTextField tfFile;
+    private javax.swing.JTextField tfQuality;
     private javax.swing.JTextField tfStreamUrl;
     // End of variables declaration//GEN-END:variables
 }

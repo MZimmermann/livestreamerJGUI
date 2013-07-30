@@ -17,7 +17,7 @@ public class livestreamerExe {
             new Thread() {
                 public void run() {
                     while (in.hasNextLine())
-                        ta.append(in.nextLine() +"\n");
+                        ta.append(in.nextLine() +"\n" +"------" +"\n");
                 }
             }.start();
             final Scanner in2 = new Scanner(proc.getErrorStream());
@@ -33,5 +33,21 @@ public class livestreamerExe {
     }
     public void killLivestreamer(){
         proc.destroy();
+    }
+    public void nullProc(){
+        new Thread() {
+            public void run() {
+                try{
+                    proc.waitFor();
+                }
+                catch (Exception err){
+                }
+                proc = null;
+            }
+        }.start();
+    }
+    
+    public Process getProc(){
+        return proc;
     }
 }
