@@ -38,31 +38,12 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Component id="jSeparator2" alignment="0" max="32767" attributes="0"/>
           <Component id="jSeparator1" alignment="1" max="32767" attributes="0"/>
-          <Group type="102" attributes="0">
+          <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane1" max="32767" attributes="0"/>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="rbWatch" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="344" max="32767" attributes="0"/>
-                      <Component id="bGo" min="-2" pref="55" max="-2" attributes="0"/>
-                  </Group>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      <Component id="bStop" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="bFile" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="labelFile" min="-2" max="-2" attributes="0"/>
-                                  <Component id="tfFile" min="-2" pref="320" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Component id="labelOutput" min="-2" max="-2" attributes="0"/>
-                          <Component id="rbRecord" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="labelStreamUrl" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
@@ -72,8 +53,23 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="tfQuality" min="-2" pref="80" max="-2" attributes="0"/>
                           </Group>
+                          <Component id="rbWatch" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="bFile" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="labelFile" min="-2" max="-2" attributes="0"/>
+                                  <Component id="tfFile" min="-2" pref="320" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Component id="labelOutput" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="rbRecord" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <EmptySpace pref="29" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="bGo" pref="70" max="32767" attributes="0"/>
+                          <Component id="bStop" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -86,18 +82,25 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="rbWatch" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="bGo" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="bGo" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="bStop" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="11" max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="labelStreamUrl" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="tfStreamUrl" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="tfQuality" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="labelQuality" alignment="3" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="labelStreamUrl" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="tfStreamUrl" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="tfQuality" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelQuality" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="bStop" min="-2" pref="35" max="-2" attributes="0"/>
+                      <EmptySpace pref="25" max="32767" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="rbRecord" min="-2" max="-2" attributes="0"/>
@@ -162,10 +165,10 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="GO!"/>
         <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[55, 23]"/>
+          <Dimension value="[70, 35]"/>
         </Property>
         <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[55, 23]"/>
+          <Dimension value="[70, 35]"/>
         </Property>
         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[55, 23]"/>
