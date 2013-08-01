@@ -1,5 +1,6 @@
 package livestreamerJGUI;
 
+import java.io.File;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -234,8 +235,11 @@ public class livestreamerJGUI extends javax.swing.JFrame {
         
         if (returnVal == javax.swing.JFileChooser.APPROVE_OPTION) {
             String file_name = fd.getSelectedFile().getPath() + addFileExtIfNecessary(fd.getSelectedFile().getName(),fileExt);
-            tfFile.setText("\"" +file_name +"\"");
-            fileName = tfFile.getText();
+            tfFile.setText(file_name);
+            if (File.separatorChar == '\\')
+                fileName = "\"" +tfFile.getText() +"\"";
+            else
+                fileName = "'" +tfFile.getText() +"'";
         }
     }//GEN-LAST:event_bFileActionPerformed
 
