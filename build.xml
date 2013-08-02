@@ -10,6 +10,22 @@
 <project name="livestreamerJGUI" default="default" basedir=".">
     <description>Builds, tests, and runs the project livestreamerJGUI.</description>
     <import file="nbproject/build-impl.xml"/>
+	
+	<target name="-pre-init">
+		<exec executable="git" outputproperty="git.revision">
+			<arg value="describe"/>
+			<arg value="--tags"/>
+			<arg value="--always"/>
+			<arg value="HEAD"/>
+		</exec>
+		<echo file="src\livestreamerJGUI\buildInfo.java">package livestreamerJGUI;
+
+public class buildInfo {
+	public static final String version=" - ${git.revision}";
+}</echo>
+	</target>
+	
+
     <!--
 
     There exist several targets which are by default empty and which can be 

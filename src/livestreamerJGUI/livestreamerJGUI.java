@@ -37,7 +37,7 @@ public class livestreamerJGUI extends javax.swing.JFrame {
         tfFile = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("livestreamerJGUI");
+        setTitle("livestreamerJGUI" +buildInfo.version);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setMinimumSize(new java.awt.Dimension(626, 481));
 
