@@ -235,12 +235,9 @@ public class livestreamerJGUI extends javax.swing.JFrame {
         String fileExt = ".ts";
         
         if (returnVal == javax.swing.JFileChooser.APPROVE_OPTION) {
-            String file_name = fd.getSelectedFile().getPath() + addFileExtIfNecessary(fd.getSelectedFile().getName(),fileExt);
-            tfFile.setText(file_name);
-            if (File.separatorChar == '\\')
-                fileName = "\"" +tfFile.getText() +"\"";
-            else
-                fileName = "'" +tfFile.getText() +"'";
+            String extCheck = fd.getSelectedFile().getPath() + addFileExtIfNecessary(fd.getSelectedFile().getName(),fileExt);
+            tfFile.setText(extCheck);
+            fileName = tfFile.getText();
         }
     }//GEN-LAST:event_bFileActionPerformed
 
@@ -285,7 +282,11 @@ livestreamerExe le = new livestreamerExe();
             le.nullProc();
         }
         if (rbRecord.isSelected() && !"no".equals(fileName)) {
-            String[] cl = { "livestreamer", tfStreamUrl.getText(), tfQuality.getText(), "-o", tfFile.getText()};
+            if (File.separatorChar == '\\')
+                fileName = "\"" +tfFile.getText() +"\"";
+            else
+                fileName = "'" +tfFile.getText() +"'";
+            String[] cl = { "livestreamer", tfStreamUrl.getText(), tfQuality.getText(), "-o", fileName};
             le.runLivestreamer(cl, taOutput);
             bStop.setEnabled(true);
             toggleRec();
