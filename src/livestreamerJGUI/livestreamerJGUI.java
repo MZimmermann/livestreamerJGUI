@@ -102,6 +102,7 @@ public class livestreamerJGUI extends javax.swing.JFrame {
 
         labelQuality.setText("Quality:");
 
+        tfFile.setEditable(false);
         tfFile.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -282,10 +283,6 @@ livestreamerExe le = new livestreamerExe();
             le.nullProc();
         }
         if (rbRecord.isSelected() && !"no".equals(fileName)) {
-            if (File.separatorChar == '\\')
-                fileName = "\"" +tfFile.getText() +"\"";
-            else
-                fileName = "'" +tfFile.getText() +"'";
             String[] cl = { "livestreamer", tfStreamUrl.getText(), tfQuality.getText(), "-o", fileName};
             le.runLivestreamer(cl, taOutput);
             bStop.setEnabled(true);
@@ -305,7 +302,7 @@ livestreamerExe le = new livestreamerExe();
             le.nullProc();
         }
         if (rbRecord.isSelected() && "no".equals(fileName)) {
-            JOptionPane.showMessageDialog(this,"Please enter a file name");
+            JOptionPane.showMessageDialog(this,"Please choose a filename");
             bGo.setEnabled(true);
             bStop.setEnabled(false);
         }
