@@ -24,6 +24,9 @@ public class buildInfo {
 	public static final String version=" - ${git.revision}";
 }</echo>
 	</target>
+	<target name="-post-compile">
+		<copy file="${src.dir}/livestreamerJGUI/favorites.txt" todir="${dist.dir}"/>
+	</target>
 	
 
     <!--
