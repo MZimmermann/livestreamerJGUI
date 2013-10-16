@@ -6,4 +6,4 @@ Requires livestreamer to be installed and available in the PATH of your OS.
 
 Any pointers on better coding practices and suggestions are welcome.
 
-![Screenshot](http://i.imgur.com/LPEHMZt.png)
+![Screenshot](http://i.imgur.com/Zu5DAAM.png)
