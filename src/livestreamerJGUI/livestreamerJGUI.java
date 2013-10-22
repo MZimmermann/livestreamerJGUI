@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileFilter;
@@ -17,6 +18,7 @@ public class livestreamerJGUI extends javax.swing.JFrame {
 
     public livestreamerJGUI() {
         initComponents();
+        SwingUtilities.getRootPane(this).setDefaultButton(bGo);
     }
 
     @SuppressWarnings("unchecked")
