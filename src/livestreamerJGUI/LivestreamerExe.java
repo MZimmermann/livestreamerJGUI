@@ -3,10 +3,10 @@ package livestreamerJGUI;
 import java.util.Scanner;
 
 
-public class livestreamerExe {
+public class LivestreamerExe {
     private Process proc;
     
-    livestreamerExe (){
+    LivestreamerExe (){
     }
     
     public void runLivestreamer(String[] cmd, final javax.swing.JTextArea ta){

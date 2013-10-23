@@ -14,9 +14,9 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-public class livestreamerJGUI extends javax.swing.JFrame {
+public class LivestreamerJGUI extends javax.swing.JFrame {
 
-    public livestreamerJGUI() {
+    public LivestreamerJGUI() {
         initComponents();
         SwingUtilities.getRootPane(this).setDefaultButton(bGo);
     }
@@ -47,7 +47,7 @@ public class livestreamerJGUI extends javax.swing.JFrame {
         cbFavorites = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("livestreamerJGUI" +buildInfo.version);
+        setTitle("livestreamerJGUI" +BuildInfo.version);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setMinimumSize(new java.awt.Dimension(626, 481));
 
@@ -291,7 +291,7 @@ public class livestreamerJGUI extends javax.swing.JFrame {
         labelFile.setEnabled(false);
     }//GEN-LAST:event_rbWatchActionPerformed
     
-livestreamerExe le = new livestreamerExe();
+LivestreamerExe le = new LivestreamerExe();
 
     private void bGoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bGoActionPerformed
         bGo.setEnabled(false);
@@ -374,9 +374,9 @@ livestreamerExe le = new livestreamerExe();
                 }
                 br.close();
             } catch (FileNotFoundException ex) {
-                Logger.getLogger(livestreamerJGUI.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(LivestreamerJGUI.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
-                Logger.getLogger(livestreamerJGUI.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(LivestreamerJGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
             for (int x = 0 ; x < favoritesList.size() ; x++) {
                 dropFavorites.insertItemAt(favoritesList.get(x), x);
@@ -397,7 +397,7 @@ livestreamerExe le = new livestreamerExe();
                 } 
                 catch (UnsupportedLookAndFeelException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
                 }
-                new livestreamerJGUI().setVisible(true);
+                new LivestreamerJGUI().setVisible(true);
             }
         });
     }

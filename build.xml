@@ -18,9 +18,9 @@
 			<arg value="--always"/>
 			<arg value="HEAD"/>
 		</exec>
-		<echo file="src\livestreamerJGUI\buildInfo.java">package livestreamerJGUI;
+		<echo file="src\livestreamerJGUI\BuildInfo.java">package livestreamerJGUI;
 
-public class buildInfo {
+public class BuildInfo {
 	public static final String version=" - ${git.revision}";
 }</echo>
 	</target>
