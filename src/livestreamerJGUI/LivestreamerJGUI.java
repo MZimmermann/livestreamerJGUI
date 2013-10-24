@@ -1,5 +1,6 @@
 package livestreamerJGUI;
 
+import java.awt.Toolkit;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -49,6 +50,7 @@ public class LivestreamerJGUI extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("livestreamerJGUI" +BuildInfo.version);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("images/icon.png")));
         setMinimumSize(new java.awt.Dimension(626, 481));
         setResizable(false);
 
