@@ -210,6 +210,7 @@ public class LivestreamerJGUI extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     ArrayList<String> favoritesList = new ArrayList<String>();
