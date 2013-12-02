@@ -52,6 +52,7 @@ public class LivestreamerJGUI extends javax.swing.JFrame {
         dropFavorites = new javax.swing.JComboBox<String>();
         cbFavorites = new javax.swing.JCheckBox();
         bOpenEditFavDialog = new javax.swing.JButton();
+        bBrowseTwitch = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("livestreamerJGUI" +BuildInfo.version);
@@ -141,6 +142,13 @@ public class LivestreamerJGUI extends javax.swing.JFrame {
             }
         });
 
+        bBrowseTwitch.setText("Browse Twitch");
+        bBrowseTwitch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bBrowseTwitchActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -172,12 +180,15 @@ public class LivestreamerJGUI extends javax.swing.JFrame {
                                         .addComponent(dropFavorites, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(bOpenEditFavDialog))
-                                    .addComponent(tfStreamUrl, javax.swing.GroupLayout.DEFAULT_SIZE, 311, Short.MAX_VALUE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(tfStreamUrl, javax.swing.GroupLayout.DEFAULT_SIZE, 311, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(bBrowseTwitch)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(labelQuality)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(tfQuality, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(bGo, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
                             .addComponent(bStop, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -202,7 +213,8 @@ public class LivestreamerJGUI extends javax.swing.JFrame {
                             .addComponent(labelStreamUrl)
                             .addComponent(tfStreamUrl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(tfQuality, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(labelQuality))
+                            .addComponent(labelQuality)
+                            .addComponent(bBrowseTwitch))
                         .addGap(18, 18, 18))
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -387,12 +399,14 @@ LivestreamerExe le = new LivestreamerExe();
             dropFavorites.setEnabled(false);
             tfStreamUrl.setEnabled(true);
             bOpenEditFavDialog.setEnabled(false);
+            setBrowseTwitchButtonEnabled(true);
         }
         else {
             refreshFavoriteList();
             dropFavorites.setEnabled(true);
             bOpenEditFavDialog.setEnabled(true);
             tfStreamUrl.setEnabled(false);
+            setBrowseTwitchButtonEnabled(false);
         }
 
     }//GEN-LAST:event_cbFavoritesActionPerformed
@@ -402,8 +416,17 @@ LivestreamerExe le = new LivestreamerExe();
         this.setEditDialogButtonEnabled(false);
     }//GEN-LAST:event_bOpenEditFavDialogActionPerformed
 
+    private void bBrowseTwitchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBrowseTwitchActionPerformed
+        TwitchPicker.main(null);
+        this.setBrowseTwitchButtonEnabled(false);
+    }//GEN-LAST:event_bBrowseTwitchActionPerformed
+
     public void setEditDialogButtonEnabled(boolean b) {
         bOpenEditFavDialog.setEnabled(b);
+    }
+    
+    public void setBrowseTwitchButtonEnabled(boolean b) {
+        bBrowseTwitch.setEnabled(b);
     }
     
     public void refreshFavoriteList() {
@@ -425,6 +448,10 @@ LivestreamerExe le = new LivestreamerExe();
         }
     }
     
+    public void setURLFieldText(String url) {
+        this.tfStreamUrl.setText(url);
+    }
+    
     public static void main(String args[]) {
         
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -441,6 +468,7 @@ LivestreamerExe le = new LivestreamerExe();
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bBrowseTwitch;
     private javax.swing.JButton bFile;
     private javax.swing.JButton bGo;
     private javax.swing.JButton bOpenEditFavDialog;

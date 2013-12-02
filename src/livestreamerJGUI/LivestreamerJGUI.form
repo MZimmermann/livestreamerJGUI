@@ -70,7 +70,11 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="bOpenEditFavDialog" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <Component id="tfStreamUrl" pref="311" max="32767" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <Component id="tfStreamUrl" pref="311" max="32767" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="bBrowseTwitch" min="-2" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="labelQuality" min="-2" max="-2" attributes="0"/>
@@ -78,7 +82,7 @@
                               <Component id="tfQuality" min="-2" pref="80" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace pref="29" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="bGo" pref="70" max="32767" attributes="0"/>
                           <Component id="bStop" max="32767" attributes="0"/>
@@ -111,6 +115,7 @@
                           <Component id="tfStreamUrl" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="tfQuality" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="labelQuality" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="bBrowseTwitch" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                   </Group>
@@ -283,6 +288,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bOpenEditFavDialogActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="bBrowseTwitch">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Browse Twitch"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bBrowseTwitchActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

@@ -43,6 +43,7 @@ public class AddFavoriteDialog extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Edit Favorites");
         setAlwaysOnTop(true);
+        setResizable(false);
         setType(java.awt.Window.Type.UTILITY);
         getContentPane().setLayout(new java.awt.GridLayout(1, 2));
 
