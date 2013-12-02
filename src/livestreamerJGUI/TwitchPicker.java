@@ -11,19 +11,16 @@ import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
-import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
 import javax.imageio.ImageIO;
-import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JTable;
@@ -148,7 +145,7 @@ public class TwitchPicker extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bSelectGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSelectGameActionPerformed
-        String channelName = (String) this.streamTable.getModel().getValueAt(this.streamTable.getSelectedRow(), 0);
+        String channelName = (String) this.streamTable.getValueAt(this.streamTable.getSelectedRow(), 0);
         String channelURL = getURLForStream(this.currentGame, channelName);
         this.dispose();
         LivestreamerJGUI.getInstance().setEnabled(true);
