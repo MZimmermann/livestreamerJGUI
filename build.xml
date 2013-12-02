@@ -26,6 +26,11 @@ public class BuildInfo {
 	</target>
 	<target name="-post-compile">
 		<copy file="${src.dir}/livestreamerJGUI/favorites.txt" todir="${dist.dir}"/>
+		<echo file="src\livestreamerJGUI\BuildInfo.java">package livestreamerJGUI;
+
+public class BuildInfo {
+	public static final String version="";
+}</echo>
 	</target>
 	
 
