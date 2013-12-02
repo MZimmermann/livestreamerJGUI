@@ -5,20 +5,31 @@
  */
 package livestreamerJGUI;
 
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
+import javax.imageio.ImageIO;
+import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import livestreamerJGUI.GamesInfo.Top;
 import livestreamerJGUI.StreamsInfo.Stream;
@@ -30,6 +41,7 @@ import livestreamerJGUI.StreamsInfo.Stream;
 public class TwitchPicker extends javax.swing.JFrame {
 
     Map<String, Pair<StreamsInfo, DefaultTableModel>> streamsForGame = new HashMap<>();
+    Map<Long, ImageIcon> icons = new HashMap<>();
     private DefaultTableModel gamesTableModel;
     private final DefaultTableModel dummyModel = new DefaultTableModel();
     private String currentGame = "";
@@ -63,11 +75,22 @@ public class TwitchPicker extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         gameTable = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
-        streamTable = new javax.swing.JTable();
+        streamTable = new JTable() {    
+            public String getToolTipText(MouseEvent e) {
+                String tip = null;
+                java.awt.Point p = e.getPoint();
+                int rowIndex = rowAtPoint(p);
+                int colIndex = columnAtPoint(p);
+                tip = getValueAt(rowIndex, colIndex).toString();
+                return tip;
+            }
+        };
         bSelectGame = new javax.swing.JButton();
         bCancelGameSelect = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(700, 400));
+        setResizable(false);
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
 
         gameTable.setAutoCreateRowSorter(true);
@@ -79,6 +102,7 @@ public class TwitchPicker extends javax.swing.JFrame {
 
             }
         ));
+        gameTable.setRowHeight(72);
         gameTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 gameTableMouseClicked(evt);
@@ -143,14 +167,18 @@ public class TwitchPicker extends javax.swing.JFrame {
     }
 
     private void gameTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_gameTableMouseClicked
-        String gameName = this.gameTable.getModel().getValueAt(this.gameTable.getSelectedRow(), 0).toString();
+        if (this.gameTable.getSelectedRow() == -1) {
+            return;
+        }
+        String gameName = this.gameTable.getValueAt(this.gameTable.getSelectedRow(), 1).toString();
         this.currentGame = gameName;
         if (this.streamsForGame.containsKey(gameName)) {
             this.streamTable.setModel(this.streamsForGame.get(gameName).getE2());
         } else {
             final Class[] classes = new Class[]{String.class, String.class, Integer.class};
             final String[] columnNames = new String[]{"Channel", "Status", "Viewers"};
-            DefaultTableModel dtm = createTableModel(classes, columnNames);
+            final String[] columnIdentifiers = new String[]{"Channel", "Status", "Viewers"};
+            DefaultTableModel dtm = createTableModel(classes, columnNames, columnIdentifiers);
             dtm.setColumnCount(3);
             String json;
             String url = "";
@@ -222,21 +250,34 @@ public class TwitchPicker extends javax.swing.JFrame {
                 tp.pack();
                 tp.setLocationRelativeTo(LivestreamerJGUI.getInstance());
                 LivestreamerJGUI.getInstance().setEnabled(false);
-                final Class[] classes = new Class[]{String.class, Integer.class};
-                final String[] columnNames = new String[]{"Game", "Viewers"};
-                tp.gamesTableModel = createTableModel(classes, columnNames);
-                tp.gamesTableModel.setColumnCount(2);
+                final Class[] classes = new Class[]{ImageIcon.class, String.class, Integer.class};
+                final String[] columnNames = new String[]{"", "Game", "Viewers"};
+                final String[] columnIdentifiers = new String[]{"Icons", "Game", "Viewers"};
+                tp.gamesTableModel = createTableModel(classes, columnNames, columnIdentifiers);
+                tp.gamesTableModel.setColumnCount(3);
                 tp.gameTable.setModel(tp.gamesTableModel);
+                tp.gameTable.createDefaultColumnsFromModel();
+                DefaultTableCellRenderer centeredRenderer = new DefaultTableCellRenderer();
+                centeredRenderer.setHorizontalAlignment(JLabel.CENTER);
+                tp.gameTable.setDefaultRenderer(String.class, centeredRenderer);
+                tp.gameTable.setDefaultRenderer(Integer.class, centeredRenderer);
                 String json = "";
                 String url = "";
-                url = "https://api.twitch.tv/kraken/games/top";
+                url = "https://api.twitch.tv/kraken/games/top?limit=100";
                 json = getJsonStringFromTwitchApi(url);
                 tp.gamesInfo = GamesInfo.fromJson(json);
-                System.out.println(tp.gamesInfo.getTop()[0].getGame().getName());
+
+                tp.gameTable.getColumn("").setMinWidth(52);
+                tp.gameTable.getColumn("").setMaxWidth(52);
+
+                tp.gameTable.getColumn("Viewers").setMinWidth(60);
+                tp.gameTable.getColumn("Viewers").setMaxWidth(60);
+
                 for (Top top : tp.gamesInfo.getTop()) {
-                    Object[] data = new Object[2];
-                    data[0] = top.getGame().getName();
-                    data[1] = new Integer(top.getViewers());
+                    Object[] data = new Object[3];
+                    data[0] = tp.getImageIconForUrl(top.getGame().getId(), top.getGame().getBox().getSmall());
+                    data[1] = top.getGame().getName();
+                    data[2] = new Integer(top.getViewers());
                     tp.gamesTableModel.addRow(data);
                 }
                 tp.streamTable.setModel(tp.dummyModel);
@@ -274,9 +315,8 @@ public class TwitchPicker extends javax.swing.JFrame {
         return null;
     }
 
-    public static DefaultTableModel createTableModel(final Class[] classes, final String[] columnNames) {
+    public static DefaultTableModel createTableModel(final Class[] classes, final String[] columnNames, final String[] columnIdentifiers) {
         DefaultTableModel model = new DefaultTableModel() {
-
             @Override
             public Class<?> getColumnClass(int columnIndex) {
                 if (columnIndex < classes.length) {
@@ -290,8 +330,51 @@ public class TwitchPicker extends javax.swing.JFrame {
                 return columnNames[column];
             }
 
+            @Override
+            public boolean isCellEditable(int a, int b) {
+                return false;
+            }
+
         };
+        model.setColumnIdentifiers(columnIdentifiers);
         return model;
+    }
+
+    private ImageIcon getImageIconForUrl(long gameId, String imageUrl) {
+        if (!icons.containsKey(gameId)) {
+            // check, if the folders have been created yet
+            File dir = new File("images/gameicons");
+            if(!dir.exists()) {
+                dir.mkdirs();
+            }
+            BufferedImage img = null;
+
+            try {
+                //URL localUrl = getClass().getResource("images/gameicons/" + gameId + ".jpg");
+                File file = new File("images/gameicons/" + gameId + ".jpg");
+                if (file.exists()) {
+                    img = ImageIO.read(file);
+                }
+                // Icon for game not present, try to download it
+                if (img == null) {
+                    System.out.println("Trying to Retrieve Image for GameID " + gameId + ", url=" + imageUrl);
+                    URL url = new URL(imageUrl);
+                    img = ImageIO.read(url);
+                    if (img != null) {
+                        ImageIO.write(img, "jpg", new File("images/gameicons/" + gameId + ".jpg"));
+                    }
+                }
+                if (img == null) {
+                    // not found locally, couldn't download it either. Taking the placeholder instead.
+                    img = ImageIO.read(getClass().getResource("images/gameicons/NoIcon.jpg"));
+                }
+
+                this.icons.put(gameId, new ImageIcon(img));
+
+            } catch (IOException e) {
+            }
+        }
+        return this.icons.get(gameId);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

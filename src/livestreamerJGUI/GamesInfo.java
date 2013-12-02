@@ -6,7 +6,6 @@
 package livestreamerJGUI;
 
 import com.google.gson.Gson;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
