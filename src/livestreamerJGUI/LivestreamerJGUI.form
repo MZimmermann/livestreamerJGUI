@@ -47,7 +47,6 @@
                   <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="rbWatch" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="bFile" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
@@ -60,28 +59,34 @@
                           <Component id="rbRecord" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="labelStreamUrl" min="-2" max="-2" attributes="0"/>
-                                  <Component id="cbFavorites" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="labelStreamUrl" min="-2" max="-2" attributes="0"/>
+                                          <Component id="cbFavorites" alignment="1" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Group type="102" attributes="0">
+                                              <Component id="dropFavorites" max="32767" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="bOpenEditFavDialog" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" attributes="0">
+                                              <Component id="tfStreamUrl" pref="311" max="32767" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="bBrowseTwitch" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="labelQuality" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="rbWatch" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Component id="dropFavorites" max="32767" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="bOpenEditFavDialog" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" attributes="0">
-                                      <Component id="tfStreamUrl" pref="311" max="32767" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="bBrowseTwitch" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="labelQuality" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="tfQuality" pref="80" max="32767" attributes="0"/>
+                                  <Component id="tfQuality" max="32767" attributes="0"/>
                                   <Component id="dropQuality" max="32767" attributes="0"/>
+                                  <Component id="bSetSelectedQualityAsDefault" alignment="1" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -103,6 +108,7 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="rbWatch" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="bGo" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                  <Component id="bSetSelectedQualityAsDefault" alignment="1" min="-2" max="-2" attributes="0"/>
               </Group>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
@@ -321,6 +327,14 @@
         <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="&#xd;&#xa;"/>
         <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="DefaultComboBoxModel&lt;Quality&gt; aModel = new DefaultComboBoxModel();&#xd;&#xa;for(Quality q : Quality.values()) {&#xd;&#xa;    aModel.addElement(q);&#xd;&#xa;}&#xd;&#xa;dropQuality.setModel(aModel);&#xd;&#xa;dropQuality.setSelectedItem(Quality.best);"/>
       </AuxValues>
+    </Component>
+    <Component class="javax.swing.JButton" name="bSetSelectedQualityAsDefault">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Set quality as default"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bSetSelectedQualityAsDefaultActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
