@@ -198,7 +198,7 @@ public class TwitchPicker extends javax.swing.JFrame {
             String json;
             String url = "";
             try {
-                url = "https://api.twitch.tv/kraken/streams?game=" + URLEncoder.encode(gameName, "UTF-8");
+                url = "https://api.twitch.tv/kraken/streams?limit=100&game=" + URLEncoder.encode(gameName, "UTF-8");
             } catch (UnsupportedEncodingException ex) {
             }
             json = getJsonStringFromTwitchApi(url);
