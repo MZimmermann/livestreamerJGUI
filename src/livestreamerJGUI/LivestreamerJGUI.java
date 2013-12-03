@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -385,6 +386,10 @@ LivestreamerExe le = new LivestreamerExe();
             bStop.setEnabled(false);
         }
     }//GEN-LAST:event_bGoActionPerformed
+
+    public JTextArea getTaOutput() {
+        return taOutput;
+    }
 
     private void bStopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bStopActionPerformed
         le.killLivestreamer();
