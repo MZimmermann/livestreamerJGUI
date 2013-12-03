@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
@@ -25,6 +27,7 @@ public class LivestreamerJGUI extends javax.swing.JFrame {
 
     private LivestreamerJGUI() {
         initComponents();
+        this.tfQuality.setText(((DefaultComboBoxModel<Quality>)this.dropQuality.getModel()).getElementAt(this.dropQuality.getSelectedIndex()).toString());
         SwingUtilities.getRootPane(this).setDefaultButton(bGo);
     }
 
@@ -54,6 +57,7 @@ public class LivestreamerJGUI extends javax.swing.JFrame {
         cbFavorites = new javax.swing.JCheckBox();
         bOpenEditFavDialog = new javax.swing.JButton();
         bBrowseTwitch = new javax.swing.JButton();
+        dropQuality = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("livestreamerJGUI" +BuildInfo.version);
@@ -150,6 +154,20 @@ public class LivestreamerJGUI extends javax.swing.JFrame {
             }
         });
 
+        dropQuality.setMaximumRowCount(16);
+        dropQuality.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        DefaultComboBoxModel<Quality> aModel = new DefaultComboBoxModel();
+        for(Quality q : Quality.values()) {
+            aModel.addElement(q);
+        }
+        dropQuality.setModel(aModel);
+        dropQuality.setSelectedItem(Quality.best);
+        dropQuality.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dropQualityActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -188,7 +206,9 @@ public class LivestreamerJGUI extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(labelQuality)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(tfQuality, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(tfQuality, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                                    .addComponent(dropQuality, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(bGo, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
@@ -208,7 +228,8 @@ public class LivestreamerJGUI extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(dropFavorites, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cbFavorites)
-                            .addComponent(bOpenEditFavDialog))
+                            .addComponent(bOpenEditFavDialog)
+                            .addComponent(dropQuality, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(labelStreamUrl)
@@ -426,6 +447,11 @@ LivestreamerExe le = new LivestreamerExe();
         this.setBrowseTwitchButtonEnabled(false);
     }//GEN-LAST:event_bBrowseTwitchActionPerformed
 
+    private void dropQualityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dropQualityActionPerformed
+        Quality q = ((DefaultComboBoxModel<Quality>)dropQuality.getModel()).getElementAt(dropQuality.getSelectedIndex());
+        this.tfQuality.setText(q.toString());
+    }//GEN-LAST:event_dropQualityActionPerformed
+
     public void setEditDialogButtonEnabled(boolean b) {
         bOpenEditFavDialog.setEnabled(b);
     }
@@ -480,6 +506,7 @@ LivestreamerExe le = new LivestreamerExe();
     private javax.swing.JButton bStop;
     private javax.swing.JCheckBox cbFavorites;
     private javax.swing.JComboBox<String> dropFavorites;
+    private javax.swing.JComboBox dropQuality;
     private javax.swing.JFileChooser fd;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;

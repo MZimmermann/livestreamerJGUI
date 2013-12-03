@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Map;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
@@ -393,7 +394,7 @@ public class TwitchPicker extends javax.swing.JFrame {
             for(JsonElement e : array) {
             if(e.isJsonObject()) {
                 JsonObject current = e.getAsJsonObject();
-                result.add(current.get("display").getAsString());
+                result.add(current.get("display").getAsString().toLowerCase());
             }
         }
         } catch(JsonSyntaxException e) {
@@ -404,7 +405,7 @@ public class TwitchPicker extends javax.swing.JFrame {
         mobile_url = mobile_url.replace("\\\"", "\"");
         String playList = getJsonStringFromTwitchApi(mobile_url);
         for(String s : parsePlayList(playList)) {
-            result.add(s);
+            result.add(s.toLowerCase());
         }
         return result;
     }
