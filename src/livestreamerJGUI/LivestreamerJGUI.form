@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.8" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+<Form version="1.5" maxVersion="1.8" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
     <Component class="javax.swing.JFileChooser" name="fd">
     </Component>
@@ -52,7 +52,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="labelFile" min="-2" max="-2" attributes="0"/>
-                                  <Component id="tfFile" min="-2" pref="320" max="-2" attributes="0"/>
+                                  <Component id="tfFile" alignment="0" min="-2" pref="320" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Component id="labelOutput" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -162,8 +162,10 @@
     <Component class="javax.swing.JButton" name="bFile">
       <Properties>
         <Property name="text" type="java.lang.String" value="File"/>
-        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
+      <BindingProperties>
+        <BindingProperty name="enabled" source="rbRecord" sourcePath="${selected}" target="bFile" targetPath="enabled" updateStrategy="1" immediately="false"/>
+      </BindingProperties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bFileActionPerformed"/>
       </Events>
@@ -171,8 +173,10 @@
     <Component class="javax.swing.JLabel" name="labelFile">
       <Properties>
         <Property name="text" type="java.lang.String" value="File name:"/>
-        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
+      <BindingProperties>
+        <BindingProperty name="enabled" source="rbRecord" sourcePath="${selected}" target="labelFile" targetPath="enabled" updateStrategy="1" immediately="false"/>
+      </BindingProperties>
     </Component>
     <Component class="javax.swing.JRadioButton" name="rbRecord">
       <Properties>
@@ -181,9 +185,6 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Record to file"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rbRecordActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JRadioButton" name="rbWatch">
       <Properties>
@@ -249,13 +250,18 @@
     <Component class="javax.swing.JButton" name="bStop">
       <Properties>
         <Property name="text" type="java.lang.String" value="Stop"/>
-        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
+      <BindingProperties>
+        <BindingProperty name="enabled" source="bGo" sourcePath="${!enabled}" target="bStop" targetPath="enabled" updateStrategy="1" immediately="false"/>
+      </BindingProperties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bStopActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="tfStreamUrl">
+      <BindingProperties>
+        <BindingProperty name="enabled" source="cbFavorites" sourcePath="${!selected}" target="tfStreamUrl" targetPath="enabled" updateStrategy="1" immediately="false"/>
+      </BindingProperties>
     </Component>
     <Component class="javax.swing.JTextField" name="tfQuality">
       <Properties>
@@ -270,16 +276,20 @@
     <Component class="javax.swing.JTextField" name="tfFile">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
-        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
+      <BindingProperties>
+        <BindingProperty name="enabled" source="rbRecord" sourcePath="${selected}" target="tfFile" targetPath="enabled" updateStrategy="1" immediately="false"/>
+      </BindingProperties>
     </Component>
     <Component class="javax.swing.JComboBox" name="dropFavorites">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="0"/>
         </Property>
-        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
+      <BindingProperties>
+        <BindingProperty name="enabled" source="cbFavorites" sourcePath="${selected}" target="dropFavorites" targetPath="enabled" updateStrategy="1" immediately="false"/>
+      </BindingProperties>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
@@ -296,8 +306,10 @@
     <Component class="javax.swing.JButton" name="bOpenEditFavDialog">
       <Properties>
         <Property name="text" type="java.lang.String" value="Edit Favorites"/>
-        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
+      <BindingProperties>
+        <BindingProperty name="enabled" source="cbFavorites" sourcePath="${selected}" target="bOpenEditFavDialog" targetPath="enabled" updateStrategy="1" immediately="false"/>
+      </BindingProperties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bOpenEditFavDialogActionPerformed"/>
       </Events>
@@ -306,6 +318,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Browse Twitch"/>
       </Properties>
+      <BindingProperties>
+        <BindingProperty name="enabled" source="cbFavorites" sourcePath="${!selected}" target="bBrowseTwitch" targetPath="enabled" updateStrategy="1" immediately="false"/>
+      </BindingProperties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bBrowseTwitchActionPerformed"/>
       </Events>

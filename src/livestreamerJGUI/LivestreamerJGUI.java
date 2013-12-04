@@ -6,9 +6,13 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
@@ -20,6 +24,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class LivestreamerJGUI extends javax.swing.JFrame {
     private static LivestreamerJGUI instance;
     private static final String DEFAULT_QUALITY_SETTING = "defaultQuality";
+    private final List<JComponent> componentsToLock = new ArrayList<>();
+    private final Map<JComponent,Boolean> componentStates = new HashMap<>();
     
     public static LivestreamerJGUI getInstance() {
         return instance;
@@ -27,6 +33,23 @@ public class LivestreamerJGUI extends javax.swing.JFrame {
 
     private LivestreamerJGUI() {
         initComponents();
+        
+        // Components we want to lock if the Go-button is clicked
+        this.componentsToLock.add(fd);
+        this.componentsToLock.add(bFile);
+        this.componentsToLock.add(labelFile);
+        this.componentsToLock.add(rbRecord);
+        this.componentsToLock.add(rbWatch);
+        this.componentsToLock.add(tfStreamUrl);
+        this.componentsToLock.add(tfQuality);
+        this.componentsToLock.add(tfFile);
+        this.componentsToLock.add(dropFavorites);
+        this.componentsToLock.add(cbFavorites);
+        this.componentsToLock.add(bOpenEditFavDialog);
+        this.componentsToLock.add(bBrowseTwitch);
+        this.componentsToLock.add(dropQuality);
+        this.componentsToLock.add(bSetSelectedQualityAsDefault);
+        
         String defaultQuality = PreferenceHandler.getInstance().get(DEFAULT_QUALITY_SETTING);
         if(defaultQuality != null) {
             this.tfQuality.setText(defaultQuality);
@@ -37,9 +60,33 @@ public class LivestreamerJGUI extends javax.swing.JFrame {
         SwingUtilities.getRootPane(this).setDefaultButton(bGo);
     }
 
+    private void saveComponentState() {
+        for(JComponent c : this.componentsToLock) {
+            this.componentStates.put(c, c.isEnabled());
+        }
+    }
+    
+    private void disableComponents() {
+        for(JComponent c : this.componentsToLock) {
+            c.setEnabled(false);
+        }
+    }
+    
+    private void unlockUI() {
+        for(JComponent c : this.componentsToLock) {
+            c.setEnabled(this.componentStates.get(c));
+        }
+    }
+    
+    private void lockUI() {
+        this.saveComponentState();
+        this.disableComponents();
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         fd = new javax.swing.JFileChooser();
         selectGroup = new javax.swing.ButtonGroup();
@@ -74,7 +121,10 @@ public class LivestreamerJGUI extends javax.swing.JFrame {
         setResizable(false);
 
         bFile.setText("File");
-        bFile.setEnabled(false);
+
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, rbRecord, org.jdesktop.beansbinding.ELProperty.create("${selected}"), bFile, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        bindingGroup.addBinding(binding);
+
         bFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bFileActionPerformed(evt);
@@ -82,15 +132,12 @@ public class LivestreamerJGUI extends javax.swing.JFrame {
         });
 
         labelFile.setText("File name:");
-        labelFile.setEnabled(false);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, rbRecord, org.jdesktop.beansbinding.ELProperty.create("${selected}"), labelFile, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        bindingGroup.addBinding(binding);
 
         selectGroup.add(rbRecord);
         rbRecord.setText("Record to file");
-        rbRecord.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbRecordActionPerformed(evt);
-            }
-        });
 
         selectGroup.add(rbWatch);
         rbWatch.setSelected(true);
@@ -123,21 +170,30 @@ public class LivestreamerJGUI extends javax.swing.JFrame {
         labelStreamUrl.setText("Stream URL:");
 
         bStop.setText("Stop");
-        bStop.setEnabled(false);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, bGo, org.jdesktop.beansbinding.ELProperty.create("${!enabled}"), bStop, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        bindingGroup.addBinding(binding);
+
         bStop.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bStopActionPerformed(evt);
             }
         });
 
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, cbFavorites, org.jdesktop.beansbinding.ELProperty.create("${!selected}"), tfStreamUrl, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        bindingGroup.addBinding(binding);
+
         tfQuality.setToolTipText("Leave empty and ceck output if you are unsure about available bitrates.");
 
         labelQuality.setText("Quality:");
 
         tfFile.setEditable(false);
-        tfFile.setEnabled(false);
 
-        dropFavorites.setEnabled(false);
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, rbRecord, org.jdesktop.beansbinding.ELProperty.create("${selected}"), tfFile, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        bindingGroup.addBinding(binding);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, cbFavorites, org.jdesktop.beansbinding.ELProperty.create("${selected}"), dropFavorites, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        bindingGroup.addBinding(binding);
 
         cbFavorites.setText("Favorites:");
         cbFavorites.setToolTipText("");
@@ -148,7 +204,10 @@ public class LivestreamerJGUI extends javax.swing.JFrame {
         });
 
         bOpenEditFavDialog.setText("Edit Favorites");
-        bOpenEditFavDialog.setEnabled(false);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, cbFavorites, org.jdesktop.beansbinding.ELProperty.create("${selected}"), bOpenEditFavDialog, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        bindingGroup.addBinding(binding);
+
         bOpenEditFavDialog.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bOpenEditFavDialogActionPerformed(evt);
@@ -156,6 +215,10 @@ public class LivestreamerJGUI extends javax.swing.JFrame {
         });
 
         bBrowseTwitch.setText("Browse Twitch");
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, cbFavorites, org.jdesktop.beansbinding.ELProperty.create("${!selected}"), bBrowseTwitch, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        bindingGroup.addBinding(binding);
+
         bBrowseTwitch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bBrowseTwitchActionPerformed(evt);
@@ -280,82 +343,13 @@ public class LivestreamerJGUI extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        bindingGroup.bind();
+
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    ArrayList<String> favoritesList = new ArrayList<String>();
-    
-    private void toggleRec(){
-        if (rbWatch.isEnabled()){
-            rbWatch.setEnabled(false);
-            rbRecord.setEnabled(false);
-            if (!cbFavorites.isSelected())
-                tfStreamUrl.setEnabled(false);
-            else {
-                dropFavorites.setEnabled(false);
-                bOpenEditFavDialog.setEnabled(false);
-            }
-            tfQuality.setEnabled(false);
-            bFile.setEnabled(false);
-            tfFile.setEnabled(false);
-            cbFavorites.setEnabled(false);
-            bBrowseTwitch.setEnabled(false);
-            bSetSelectedQualityAsDefault.setEnabled(false);
-            dropQuality.setEnabled(false);
-        }
-        else{
-            rbWatch.setEnabled(true);
-            rbRecord.setEnabled(true);
-            if (!cbFavorites.isSelected())
-                tfStreamUrl.setEnabled(true);
-            else {
-                dropFavorites.setEnabled(true);
-                bOpenEditFavDialog.setEnabled(true);
-            }
-            tfQuality.setEnabled(true);
-            bFile.setEnabled(true);
-            tfFile.setEnabled(true);
-            cbFavorites.setEnabled(true);
-            bBrowseTwitch.setEnabled(true);
-            bSetSelectedQualityAsDefault.setEnabled(true);
-            dropQuality.setEnabled(true);
-        } 
-    }
-    private void toggleWatch(){
-        if (rbRecord.isEnabled()){
-            rbWatch.setEnabled(false);
-            rbRecord.setEnabled(false);
-            if (!cbFavorites.isSelected())
-                tfStreamUrl.setEnabled(false);
-            else {
-                dropFavorites.setEnabled(false);
-                bOpenEditFavDialog.setEnabled(false);
-            }
-            tfQuality.setEnabled(false);
-            bFile.setEnabled(false);
-            tfFile.setEnabled(false);
-            cbFavorites.setEnabled(false);
-            bBrowseTwitch.setEnabled(false);
-            bSetSelectedQualityAsDefault.setEnabled(false);
-            dropQuality.setEnabled(false);
-        }
-        else{
-            rbWatch.setEnabled(true);
-            rbRecord.setEnabled(true);
-            if (!cbFavorites.isSelected())
-                tfStreamUrl.setEnabled(true);
-            else {
-                dropFavorites.setEnabled(true);
-                bOpenEditFavDialog.setEnabled(true);
-            }
-            tfQuality.setEnabled(true);
-            cbFavorites.setEnabled(true);
-            bBrowseTwitch.setEnabled(true);
-            bSetSelectedQualityAsDefault.setEnabled(true);
-            dropQuality.setEnabled(true);
-        } 
-    }
+    ArrayList<String> favoritesList = new ArrayList<>();
     
     private String addFileExtIfNecessary(String file,String ext) {
         if(file.lastIndexOf('.') == -1) {
@@ -383,19 +377,9 @@ public class LivestreamerJGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_bFileActionPerformed
 
-    private void rbRecordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbRecordActionPerformed
-        bFile.setEnabled(true);
-        tfFile.setEnabled(true);
-        tfFile.setEnabled(true);
-        labelFile.setEnabled(true);
-    }//GEN-LAST:event_rbRecordActionPerformed
-
     private void rbWatchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbWatchActionPerformed
         fileName = "no";
         tfFile.setText("");
-        bFile.setEnabled(false);
-        tfFile.setEnabled(false);
-        labelFile.setEnabled(false);
     }//GEN-LAST:event_rbWatchActionPerformed
     
 LivestreamerExe le = new LivestreamerExe();
@@ -403,52 +387,43 @@ LivestreamerExe le = new LivestreamerExe();
     private void bGoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bGoActionPerformed
         bGo.setEnabled(false);
         taOutput.setText("");
+        String streamURL = cbFavorites.isSelected() ? dropFavorites.getSelectedItem().toString() : tfStreamUrl.getText();
+        
         if (rbWatch.isSelected()) {
-            if (cbFavorites.isSelected()) {
-                String[] cl = { "livestreamer", dropFavorites.getSelectedItem().toString(), tfQuality.getText()};
-                le.runLivestreamer(cl, taOutput);
-            }
-            else {
-                String[] cl = { "livestreamer", tfStreamUrl.getText(), tfQuality.getText()};
-                le.runLivestreamer(cl, taOutput);
-            }
-            bStop.setEnabled(true);
-            toggleWatch();
+            String[] cl = { "livestreamer", streamURL, tfQuality.getText()};
+            le.runLivestreamer(cl, taOutput);
+
+            this.lockUI();
             new Thread() {
+                @Override
                 public void run() {
                     try{
                         le.getProc().waitFor();
                     }
-                    catch (Exception err){
+                    catch (InterruptedException err){
                     }
                     bGo.setEnabled(true);
                     bStop.setEnabled(false);
-                    toggleWatch();
+                    unlockUI();
                 }
             }.start();
             le.nullProc();
         }
         if (rbRecord.isSelected() && !"no".equals(fileName)) {
-            if (cbFavorites.isSelected()) {
-                String[] cl = { "livestreamer", dropFavorites.getSelectedItem().toString(), tfQuality.getText(), "-o", fileName};
-                le.runLivestreamer(cl, taOutput);
-            }
-            else {
-                String[] cl = { "livestreamer", tfStreamUrl.getText(), tfQuality.getText(), "-o", fileName};
-                le.runLivestreamer(cl, taOutput);
-            }
-            bStop.setEnabled(true);
-            toggleRec();
+            String[] cl = { "livestreamer", streamURL, tfQuality.getText(), "-o", fileName};
+            le.runLivestreamer(cl, taOutput);
+            this.lockUI();
             new Thread() {
+                @Override
                 public void run() {
                     try{
                         le.getProc().waitFor();
                     }
-                    catch (Exception err){
+                    catch (InterruptedException err){
                     }
                     bGo.setEnabled(true);
                     bStop.setEnabled(false);
-                    toggleRec();
+                    unlockUI();
                 }
             }.start();
             le.nullProc();
@@ -471,22 +446,11 @@ LivestreamerExe le = new LivestreamerExe();
     }//GEN-LAST:event_bStopActionPerformed
 
     private void cbFavoritesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFavoritesActionPerformed
-        favoritesList.clear();
-        dropFavorites.removeAllItems();
-        if (dropFavorites.isEnabled()) {
-            dropFavorites.setEnabled(false);
-            tfStreamUrl.setEnabled(true);
-            bOpenEditFavDialog.setEnabled(false);
-            setBrowseTwitchButtonEnabled(true);
-        }
-        else {
+        if(cbFavorites.isSelected()) {
+            favoritesList.clear();
+            dropFavorites.removeAllItems();
             refreshFavoriteList();
-            dropFavorites.setEnabled(true);
-            bOpenEditFavDialog.setEnabled(true);
-            tfStreamUrl.setEnabled(false);
-            setBrowseTwitchButtonEnabled(false);
         }
-
     }//GEN-LAST:event_cbFavoritesActionPerformed
 
     private void bOpenEditFavDialogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bOpenEditFavDialogActionPerformed
@@ -542,6 +506,7 @@ LivestreamerExe le = new LivestreamerExe();
     public static void main(String args[]) {
         
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 try {
                     UIManager.setLookAndFeel(
@@ -554,6 +519,8 @@ LivestreamerExe le = new LivestreamerExe();
             }
         });
     }
+    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bBrowseTwitch;
     private javax.swing.JButton bFile;
@@ -579,5 +546,7 @@ LivestreamerExe le = new LivestreamerExe();
     private javax.swing.JTextField tfFile;
     private javax.swing.JTextField tfQuality;
     private javax.swing.JTextField tfStreamUrl;
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
+
 }
