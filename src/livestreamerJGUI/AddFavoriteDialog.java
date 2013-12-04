@@ -13,7 +13,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 public class AddFavoriteDialog extends javax.swing.JFrame {
-    
+
     /**
      * Creates new form AddFavoriteDialog
      */
@@ -107,16 +107,17 @@ public class AddFavoriteDialog extends javax.swing.JFrame {
         try {
             FileWriter writer = new FileWriter("favorites.txt");
             for (Object str : ((DefaultListModel<String>) listUIElement.getModel()).toArray()) {
-                writer.write((String)str+"\n");
+                writer.write((String) str + "\n");
             }
             writer.close();
-        } catch (IOException e) {}
+        } catch (IOException e) {
+        }
         this.dispose();
         LivestreamerJGUI.getInstance().setEnabled(true);
         LivestreamerJGUI.getInstance().toFront();
         LivestreamerJGUI.getInstance().setEditDialogButtonEnabled(true);
         LivestreamerJGUI.getInstance().refreshFavoriteList();
-        
+
     }//GEN-LAST:event_bOkActionPerformed
 
     private void bCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCancelActionPerformed
@@ -127,20 +128,20 @@ public class AddFavoriteDialog extends javax.swing.JFrame {
     }//GEN-LAST:event_bCancelActionPerformed
 
     private void bDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bDeleteActionPerformed
-        List<String> toDelete = new ArrayList<String>();
-        for(int i : listUIElement.getSelectedIndices()) {
-            toDelete.add((String)listUIElement.getModel().getElementAt(i));
+        List<String> toDelete = new ArrayList<>();
+        for (int i : listUIElement.getSelectedIndices()) {
+            toDelete.add((String) listUIElement.getModel().getElementAt(i));
         }
-        
-        for(String s : toDelete) {
-            ((DefaultListModel)listUIElement.getModel()).removeElement(s);
+
+        for (String s : toDelete) {
+            ((DefaultListModel) listUIElement.getModel()).removeElement(s);
         }
     }//GEN-LAST:event_bDeleteActionPerformed
 
     private void bAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAddActionPerformed
         String newFavorite = tfNewUrl.getText();
-        if(!newFavorite.equals("")) {
-            ((DefaultListModel)listUIElement.getModel()).addElement(newFavorite);
+        if (!newFavorite.equals("")) {
+            ((DefaultListModel) listUIElement.getModel()).addElement(newFavorite);
         }
         tfNewUrl.setText("");
     }//GEN-LAST:event_bAddActionPerformed
@@ -165,24 +166,19 @@ public class AddFavoriteDialog extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AddFavoriteDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AddFavoriteDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AddFavoriteDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(AddFavoriteDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 try {
                     UIManager.setLookAndFeel(
                             UIManager.getSystemLookAndFeelClassName());
-                } 
-                catch (UnsupportedLookAndFeelException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {}
+                } catch (UnsupportedLookAndFeelException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+                }
                 final AddFavoriteDialog afd = new AddFavoriteDialog();
                 afd.setVisible(true);
                 afd.pack();
@@ -194,7 +190,8 @@ public class AddFavoriteDialog extends javax.swing.JFrame {
                         afd.getModel().addElement(br.readLine());
                     }
                     br.close();
-                } catch(IOException e) {}
+                } catch (IOException e) {
+                }
                 afd.addWindowListener(new WindowAdapter() {
                     @Override
                     public void windowClosing(WindowEvent e) {
@@ -204,12 +201,12 @@ public class AddFavoriteDialog extends javax.swing.JFrame {
             }
         });
     }
-private DefaultListModel<String> model = new DefaultListModel<>();
+    private final DefaultListModel<String> model = new DefaultListModel<>();
 
     public DefaultListModel<String> getModel() {
         return model;
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ButtonPanel;
     private javax.swing.JPanel ListPanel;

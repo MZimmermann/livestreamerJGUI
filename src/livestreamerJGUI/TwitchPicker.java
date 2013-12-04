@@ -5,6 +5,11 @@
  */
 package livestreamerJGUI;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -18,12 +23,16 @@ import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -74,12 +83,10 @@ public class TwitchPicker extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         streamTable = new JTable() {    
             public String getToolTipText(MouseEvent e) {
-                String tip = null;
                 java.awt.Point p = e.getPoint();
                 int rowIndex = rowAtPoint(p);
                 int colIndex = columnAtPoint(p);
-                tip = getValueAt(rowIndex, colIndex).toString();
-                return tip;
+                return getValueAt(rowIndex, colIndex).toString();
             }
         };
         bSelectGame = new javax.swing.JButton();
@@ -152,6 +159,17 @@ public class TwitchPicker extends javax.swing.JFrame {
         LivestreamerJGUI.getInstance().toFront();
         LivestreamerJGUI.getInstance().setBrowseTwitchButtonEnabled(true);
         LivestreamerJGUI.getInstance().setURLFieldText(channelURL);
+        List<String> qualities = this.availableQualities(channelName);
+        if(!qualities.isEmpty()) {
+            JTextArea ta = LivestreamerJGUI.getInstance().getTaOutput();
+            ta.append("Available qualities for " + channelName + " (" + channelURL + "):\n");
+            int lastElement = qualities.size()-1;
+            for(int ctr = 0; ctr <= lastElement; ctr++) {
+                String s = qualities.get(ctr);
+                ta.append(s + (ctr != lastElement ? ", " : ".\n\n"));
+            }
+            
+        }
     }//GEN-LAST:event_bSelectGameActionPerformed
 
     private String getURLForStream(String game, String channel) {
@@ -180,7 +198,7 @@ public class TwitchPicker extends javax.swing.JFrame {
             String json;
             String url = "";
             try {
-                url = "https://api.twitch.tv/kraken/streams?game=" + URLEncoder.encode(gameName, "UTF-8");
+                url = "https://api.twitch.tv/kraken/streams?limit=100&game=" + URLEncoder.encode(gameName, "UTF-8");
             } catch (UnsupportedEncodingException ex) {
             }
             json = getJsonStringFromTwitchApi(url);
@@ -211,31 +229,9 @@ public class TwitchPicker extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TwitchPicker.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TwitchPicker.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TwitchPicker.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TwitchPicker.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 try {
                     UIManager.setLookAndFeel(
@@ -258,10 +254,8 @@ public class TwitchPicker extends javax.swing.JFrame {
                 centeredRenderer.setHorizontalAlignment(JLabel.CENTER);
                 tp.gameTable.setDefaultRenderer(String.class, centeredRenderer);
                 tp.gameTable.setDefaultRenderer(Integer.class, centeredRenderer);
-                String json = "";
-                String url = "";
-                url = "https://api.twitch.tv/kraken/games/top?limit=100";
-                json = getJsonStringFromTwitchApi(url);
+                String url = "https://api.twitch.tv/kraken/games/top?limit=100";
+                String json = getJsonStringFromTwitchApi(url);
                 tp.gamesInfo = GamesInfo.fromJson(json);
 
                 tp.gameTable.getColumn("").setMinWidth(52);
@@ -303,13 +297,26 @@ public class TwitchPicker extends javax.swing.JFrame {
             return sb.toString();
         } catch (IOException e) {
         } finally {
-            try {
-                is.close();
-            } catch (IOException e) {
-
+            if (is != null) {
+                try {
+                    is.close();
+                } catch (IOException e) {}
             }
         }
         return null;
+    }
+    
+    public static List<String> parsePlayList(String pl) {
+        List<String> result = new ArrayList<>();
+        int lastOccurence = 0;
+        while (lastOccurence != -1) {
+            lastOccurence = pl.indexOf(",NAME=",lastOccurence+1);
+            if(lastOccurence != -1) {
+                int end = pl.indexOf(",",lastOccurence + 1);
+               result.add("mobile_" + pl.substring(lastOccurence + 7, end - 1));
+            }
+        }
+        return result;
     }
 
     public static DefaultTableModel createTableModel(final Class[] classes, final String[] columnNames, final String[] columnIdentifiers) {
@@ -372,6 +379,43 @@ public class TwitchPicker extends javax.swing.JFrame {
             }
         }
         return this.icons.get(gameId);
+    }
+    
+    private List<String> availableQualities(String channelName) {
+        List<String> result = new ArrayList<>();
+        JsonParser o = new JsonParser();
+        int random = (int)Math.floor(Math.random() * 999999);
+        String json = getJsonStringFromTwitchApi("http://usher.justin.tv/find/" + channelName + ".json?p=" + random + "&type=any");
+        if (json == null) {
+            return result;
+        }
+        try {
+            JsonArray array = o.parse(json).getAsJsonArray();
+            for(JsonElement e : array) {
+            if(e.isJsonObject()) {
+                JsonObject current = e.getAsJsonObject();
+                result.add(current.get("display").getAsString().toLowerCase());
+            }
+        }
+        } catch(JsonSyntaxException e) {
+            
+        }
+        Pair<String,String> tokenAndSig = getTokenAndSig(channelName);
+        String mobile_url = "http://usher.twitch.tv/api/channel/hls/" + channelName + ".m3u8?allow_source=true&token=" + tokenAndSig.getE1() + "&sig=" + tokenAndSig.getE2();
+        mobile_url = mobile_url.replace("\\\"", "\"");
+        String playList = getJsonStringFromTwitchApi(mobile_url);
+        for(String s : parsePlayList(playList)) {
+            result.add(s.toLowerCase());
+        }
+        return result;
+    }
+    
+    private Pair<String,String> getTokenAndSig(String channelName) {
+        String url = "https://api.twitch.tv/api/channels/" + channelName + "/access_token";
+        String json = getJsonStringFromTwitchApi(url);
+        JsonParser o = new JsonParser();
+        JsonObject tokenObj = o.parse(json).getAsJsonObject();
+        return new Pair(tokenObj.get("token").getAsString(),tokenObj.get("sig").getAsString());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
