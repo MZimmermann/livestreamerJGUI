@@ -237,10 +237,11 @@ public class LivestreamerJGUI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rbWatch)
-                    .addComponent(bGo, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bSetSelectedQualityAsDefault))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(bSetSelectedQualityAsDefault, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(rbWatch)
+                        .addComponent(bGo, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -291,18 +292,34 @@ public class LivestreamerJGUI extends javax.swing.JFrame {
             rbRecord.setEnabled(false);
             if (!cbFavorites.isSelected())
                 tfStreamUrl.setEnabled(false);
+            else {
+                dropFavorites.setEnabled(false);
+                bOpenEditFavDialog.setEnabled(false);
+            }
             tfQuality.setEnabled(false);
             bFile.setEnabled(false);
             tfFile.setEnabled(false);
+            cbFavorites.setEnabled(false);
+            bBrowseTwitch.setEnabled(false);
+            bSetSelectedQualityAsDefault.setEnabled(false);
+            dropQuality.setEnabled(false);
         }
         else{
             rbWatch.setEnabled(true);
             rbRecord.setEnabled(true);
             if (!cbFavorites.isSelected())
                 tfStreamUrl.setEnabled(true);
+            else {
+                dropFavorites.setEnabled(true);
+                bOpenEditFavDialog.setEnabled(true);
+            }
             tfQuality.setEnabled(true);
             bFile.setEnabled(true);
             tfFile.setEnabled(true);
+            cbFavorites.setEnabled(true);
+            bBrowseTwitch.setEnabled(true);
+            bSetSelectedQualityAsDefault.setEnabled(true);
+            dropQuality.setEnabled(true);
         } 
     }
     private void toggleWatch(){
@@ -311,16 +328,32 @@ public class LivestreamerJGUI extends javax.swing.JFrame {
             rbRecord.setEnabled(false);
             if (!cbFavorites.isSelected())
                 tfStreamUrl.setEnabled(false);
+            else {
+                dropFavorites.setEnabled(false);
+                bOpenEditFavDialog.setEnabled(false);
+            }
             tfQuality.setEnabled(false);
             bFile.setEnabled(false);
             tfFile.setEnabled(false);
+            cbFavorites.setEnabled(false);
+            bBrowseTwitch.setEnabled(false);
+            bSetSelectedQualityAsDefault.setEnabled(false);
+            dropQuality.setEnabled(false);
         }
         else{
             rbWatch.setEnabled(true);
             rbRecord.setEnabled(true);
             if (!cbFavorites.isSelected())
                 tfStreamUrl.setEnabled(true);
+            else {
+                dropFavorites.setEnabled(true);
+                bOpenEditFavDialog.setEnabled(true);
+            }
             tfQuality.setEnabled(true);
+            cbFavorites.setEnabled(true);
+            bBrowseTwitch.setEnabled(true);
+            bSetSelectedQualityAsDefault.setEnabled(true);
+            dropQuality.setEnabled(true);
         } 
     }
     
